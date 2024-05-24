@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source the configuration file
-source /path/to/config.sh
+source config.sh
 
 filename="$TARGET_DIR/PB_%H%M%S$uuid.%C"
 
