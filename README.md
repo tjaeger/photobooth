@@ -65,6 +65,12 @@ Follow these steps to install and set up Photobooth on your Raspberry Pi:
 http://www.gphoto.org and download libgphoto2
 Get gphoto2 from https://github.com/gphoto/gphoto2
 
+This installs autoconf, needed for compiling later
+```sh
+  apt install autoconf
+  apt install autopoint
+```
+
 ```sh
     $ cd libgphoto2-2.5.22
     $ autoreconf -is
