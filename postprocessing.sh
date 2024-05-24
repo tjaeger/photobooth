@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source the configuration file
-source /path/to/config.sh
+source config.sh
 
 FILENAME=$1 # Map $1 from Argument into $filename variable
 
