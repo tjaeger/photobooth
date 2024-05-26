@@ -72,22 +72,22 @@ This installs autoconf, needed for compiling later
 ```
 
 ```sh
-    $ cd libgphoto2-2.5.22
-    $ autoreconf -is
-    $ sudo ./configure
-    $ sudo make
-    $ sudo make install
+  $ cd libgphoto2-2.5.22
+   $ autoreconf -is
+   $ sudo ./configure
+   $ sudo make
+   $ sudo make install
 ```
 Example for Build/Install for gphoto2
 ```sh
-autoreconf --install —symlink
+  autoreconf --install —symlink
   ./configure
   make
   sudo make install
 ```
 
 3. **Install feh:**
-    ```sh
+```sh
     sudo apt-get --purge remove feh
     sudo apt-get install libcurl4-openssl-dev libx11-dev libxt-dev libimlib2-dev libxinerama-dev libjpeg-progs libpng-dev libexif-dev libexif12
     mkdir Feh_Build
@@ -102,13 +102,13 @@ autoreconf --install —symlink
     sudo ldconfig
 
     feh --version
-    ```
+```
 
 4. **Clone the Photobooth repository:**
-    ```sh
+```sh
     git clone git@github.com:tjaeger/photobooth.git
     cd photobooth
-    ```
+```
 
 ## Usage
 
@@ -116,3 +116,4 @@ To start the Photobooth application, navigate to the project directory and run t
 
 ```sh
 ./photobooth.sh
+```
