@@ -12,11 +12,11 @@ echo "$self: INIT"
 ;;
    start)
 echo "$self: START"
+./displayinfo.sh
 ;;
    download)
 echo "$self: DOWNLOAD to $ARGUMENT"
 ./postprocessing.sh "$ARGUMENT"
-# ./slideshow.sh
 ;;
    stop)
 echo "$self: STOP"
