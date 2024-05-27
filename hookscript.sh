@@ -12,7 +12,7 @@ echo "$self: INIT"
 ;;
    start)
 echo "$self: START"
-./displayinfo.sh
+./showinfo.sh
 ;;
    download)
 echo "$self: DOWNLOAD to $ARGUMENT"
