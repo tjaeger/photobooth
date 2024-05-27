@@ -5,9 +5,10 @@ source config.sh
 
 killall feh # close all 'feh' processes (the running screenshow)
 
-# Display current taken image for x seconds and stop.
+# Display a static Image (eg quick Instructions) and show 'ready for action'.
+# That process is being killed when postprocessing.sh gets called
 
-feh --zoom 20 \
+feh --zoom 80 \
     --fullscreen \
     --hide-pointer \
     --quiet \
