@@ -11,4 +11,4 @@ feh --zoom 20 \
     --fullscreen \
     --hide-pointer \
     --quiet \
-    "$TARGET_DIR" &
+    "info_DE.JPG" &
