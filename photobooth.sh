@@ -8,16 +8,13 @@ filename="$TARGET_DIR/PB_%H%M%S$uuid.%C"
 # Ensure the target directory exists
 mkdir -p "$TARGET_DIR"
 
-# Generate a UUID
-UUID=$(uuid)
-
 # Get the current date and time in a readable format
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S%3N")
 
 # Execute gphoto2 with tethered capture
 gphoto2 --capture-tethered \
     --hook-script=hookscript.sh \
-    --filename="$TARGET_DIR/PB_${TIMESTAMP}_${UUID}.%C" \
+    --filename="$TARGET_DIR/PB_${TIMESTAMP}.%C" \
     --quiet
 
 # Check if gphoto2 command was successful
