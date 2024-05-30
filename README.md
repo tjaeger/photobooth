@@ -11,8 +11,7 @@ Photobooth is a simple script collection designed to build a DSLR-based photoboo
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
+- [Components](#components)
 
 ## Introduction
 
@@ -117,3 +116,22 @@ To start the Photobooth application, navigate to the project directory and run t
 ```sh
 ./photobooth.sh
 ```
+
+## Components
+
+### backup_images.sh
+
+This script is using rsync to create a Backup every 3 Minutes to a separate Device. Typically that would be a mounted external Drive (eg SSD).
+To run it scheduled it needs to be run from CRON
+
+```sh
+crontab -e
+```
+
+Add the following line to the crontab file to run the script every 3 Minutes.
+Make sure you have the PATH correct from the Example, depending on where your script resides
+
+```sh
+*/3 * * * * /home/user/photobooth/backup_images.sh
+```
+
