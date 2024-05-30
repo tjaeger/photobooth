@@ -4,14 +4,18 @@ Photobooth is a simple script collection designed to build a DSLR-based photoboo
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
-- [Components](#components)
+- [Photobooth](#photobooth)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Requirements](#requirements)
+    - [Hardware](#hardware)
+    - [Software](#software)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Components](#components)
+    - [backup\_images.sh](#backup_imagessh)
+  - [MISC](#misc)
 
 ## Introduction
 
@@ -124,14 +128,22 @@ To start the Photobooth application, navigate to the project directory and run t
 This script is using rsync to create a Backup every 3 Minutes to a separate Device. Typically that would be a mounted external Drive (eg SSD).
 To run it scheduled it needs to be run from CRON
 
-```sh
-crontab -e
-```
-
 Add the following line to the crontab file to run the script every 3 Minutes.
 Make sure you have the PATH correct from the Example, depending on where your script resides
 
 ```sh
+nano /etc/crontab
 */3 * * * * /home/user/photobooth/backup_images.sh
 ```
+
+**Explanation**
+
+- Cron: This utility is used to schedule tasks at specified intervals. The cron job */3 * * * * runs the script every 3 minutes.
+- rsync: The --ignore-existing option ensures that only new files are copied from the source directory to the backup directory, skipping files that already exist in the backup directory.
+- Log File: The script logs rsync activity to a specified log file for monitoring purposes.
+This setup ensures that every 3 minutes, the script checks for new files in the source directory and copies them to the backup directory on your USB drive.
+
+
+## MISC
+
 
