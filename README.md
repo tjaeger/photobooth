@@ -132,7 +132,7 @@ Add the following line to the crontab file to run the script every 3 Minutes.
 Make sure you have the PATH correct from the Example, depending on where your script resides
 
 ```sh
-nano /etc/crontab
+nano /etc/crontab or crontab -e
 */3 * * * * /home/user/photobooth/backup_images.sh
 ```
 
