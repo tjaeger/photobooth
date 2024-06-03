@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script will be called by CRON
+
 # Source the configuration file
 source /home/user/photobooth/config.sh
 
