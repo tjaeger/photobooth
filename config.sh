@@ -1,7 +1,7 @@
 # config.sh
 
 # Base directory the scripts are based off
-BASE_DIR="photobooth"
+BASE_DIR="/home/user/photobooth"
 
 # Target path for Tethered Images being saved
 TARGET_DIR="/home/user/photobooth/pictures"

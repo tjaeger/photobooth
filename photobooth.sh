@@ -3,7 +3,19 @@
 # Source the configuration file
 source ./config.sh
 
-filename="$TARGET_DIR/PB_%H%M%S$uuid.%C"
+# Function to check if the script is run from the BASE_DIR directory(->config.sh)
+check_base_dir() {
+    local current_dir=$(pwd)
+    if [[ "$current_dir" != "$BASE_DIR" ]]; then
+        echo "Error: Please run the script from the $BASE_DIR directory as defined in config.sh."
+        exit 1
+    fi
+}
+
+# Call the function to check the base directory
+check_base_dir
+
+# filename="$TARGET_DIR/PB_%H%M%S$uuid.%C"
 
 # Ensure the target directory exists
 mkdir -p "$TARGET_DIR"
@@ -24,3 +36,4 @@ else
     echo "Failed to capture photo." >&2
     exit 1
 fi
+

@@ -1,13 +1,31 @@
 # Photobooth
 
-Photobooth is a simple script collection designed to build a DSLR-based photobooth running on a Raspberry Pi (RPI). This project allows you to set up a fully functional photobooth with your DSLR camera, capturing high-quality images and displaying them directly on the RPI using `feh`.
+Photobooth is a simple script collection designed to build a DSLR-based photobooth running on a Raspberry Pi (RPI), capturing high-quality images and displaying them directly on the RPI using `feh`.
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Requirements](#requirements)
+  - [Hardware & Software](#hardware)
+- [Software Setup](#software-setup)
+  - [Install 'libgphoto2' & 'gphoto2'](#2-install-libgphoto2-and-gphoto2)
+  - [Install 'feh'](#3-install-feh-image-viewer)
+  - [Install 'photobooth scripts'](#4-install-the-photobooth-scripts)
+  - [Install 'imagemagick'](#5-install-imagemagick-for-image-manipulationhandling)
+  - [Post-Install cleanup](#6-post-installation-cleanup)
+- [Options](#options)
+  - [Backup - add external Drive](#backup---add-external-usb-drive)
+  - [Backup - setup automatic backup](#backup---automatic-backup-of-images)
+  - [Run the Photobooth](#run-the-photobooth)
+    - [RUN - init and Preflight check](#init-and-pre-flight-check)
+    - [RUN - Photobooth](#run-the-software)
+  
 
 ## Introduction
-
-Photobooth is aimed at hobbyists and professionals who want to create a DIY photobooth using their DSLR camera and a Raspberry Pi. The scripts provided in this collection will help you capture, display, and manage photos effortlessly.
+Photobooth is aimed at hobbyists who want to create a DIY photobooth using their DSLR camera and a Raspberry Pi. The scripts provided in this collection will help you capture, display, and manage photos effortlessly.
 
 ## Features
-
 - Capture high-quality photos using a DSLR camera in 'tethered mode'
   - All Camera/Flash stuff is managed by 'Camera gear'. 
   - Camera trigger is a Radio remote Buzzer - no fiddling with buttons on a screen
@@ -17,11 +35,9 @@ Photobooth is aimed at hobbyists and professionals who want to create a DIY phot
 
 
 # Requirements
-
 To get started with Photobooth, you'll need the following hardware and Software
 
 ## Hardware
-
 - Raspberry Pi (any model with USB support - i am using RPI5/8G/64G SDcard)
 - DSLR Camera with USB connectivity and TETHERED SHOOTING Functionality
 - USB Cable to connect the DSLR to the RPI
@@ -36,23 +52,33 @@ To get started with Photobooth, you'll need the following hardware and Software
 
 Optional HW: External LED, Button for headless RPI management.
 
+## Software
+I am using the latest RPI-OS 64bit
 
-## Software Setup
+```sh
+$ lsb_release -a
+[...]
+Description:	Debian GNU/Linux 12 (bookworm)
+Release:	12
 
-1. **Update your Raspberry Pi:**
-    ```sh
-    sudo apt update && sudo apt upgrade -y
-    ```
+$ uname -a
+Linux photobooth 6.6.31-v8-16k+ #1766 SMP PREEMPT Fri May 24 12:15:34 BST 2024 aarch64 GNU/Linux
+```
 
-# 2. **Install libgphoto2 and gphoto2**
+# Software Setup
 
+## 1. **Update your Raspberry Pi:**
+```sh
+sudo apt update && sudo apt upgrade -y
+```
+
+## 2. **Install libgphoto2 and gphoto2**
 The 'photobooth' directory will be installed in the users home directory. In this case the user is named 'user'.
 ```home/user/photobooth```
 
 
 
 ### Install Dependencies
-
 This installs autoconf and other tools/libraries, needed for compiling later
 ```sh
 sudo apt install autoconf
@@ -65,17 +91,11 @@ https://github.com/gphoto/libgphoto2/releases
 
 ```sh
 cd ~/
-wget https://github.com/gphoto/libgphoto2/releases/download/v2.5.31/libgphoto2-2.5.31.tar.bz2
-tar jxvf libgphoto2-2.5.31.tar.bz2
-```
-This probably also can be 'git clone' downloaded. Maybe someone can verify.
-
-
-```sh
-cd libgphoto2-2.5.31
-autoreconf -is
-sudo ./configure
-sudo make
+git clone https://github.com/gphoto/libgphoto2.git
+cd libgphoto2
+autoreconf --install --symlink
+./configure
+make
 sudo make install
 ```
 
@@ -103,7 +123,6 @@ gphoto2 -v
 ```
 
 ## 3. **Install FEH Image viewer**
-
 ```sh
 sudo apt --purge remove feh
 sudo apt install -y libcurl4-openssl-dev libx11-dev libxt-dev libimlib2-dev libxinerama-dev libjpeg-progs libpng-dev libexif-dev libexif12
@@ -119,7 +138,6 @@ sudo ldconfig
 feh --version
 ```
 ## 4. Install the PHOTOBOOTH scripts
-
 This assumes the user is called 'user' (in case it's 'pi' or others please adjust paths)
 
 ```sh
@@ -176,13 +194,11 @@ sudo chmod 0000 /usr/lib/systemd/user/gvfs* # this prevent GVFS from starting
 ```sudo reboot``` and try again
 
 ## 6. **Post-Installation CLEANUP**
-
 Once all the above packages are compiled and installed successfully, the Build Directorties can be deleted.
 
 ```sh
 cd ~/
-rm libgphoto2-2.5.31.tar.bz2
-sudo rm -r libgphoto2-2.5.31
+sudo rm -r libgphoto2
 sudo rm -r gphoto2
 sudo rm -r feh
 sudo rm -r ImageMagick
@@ -190,8 +206,7 @@ sudo rm -r ImageMagick
 
 # Options
 
-## **BACKUP - Add an external USB Drive for Backup and create a mount point**
-
+## **BACKUP - Add external USB Drive**
 **This assumes you have an attached USB(SSD) Drive attached and formatted EXT4 !!**
 
 ```sh
@@ -233,9 +248,7 @@ or check the mount point - ```/home/user/ssdusb```
 
 
 ## **BACKUP - Automatic Backup of Images**
-
-In this setup the RPI runs off a SDCARD. To prevent loss in case of SDCARD Damage there is a helper script
-to create a local Backup to an external Drive - a USB-SSD Drive in my case.
+In this setup the RPI runs off a SDCARD. To prevent loss in case of SDCARD Damage there is a helper script to create a local Backup to an external Drive - a USB-SSD Drive in my case.
 The script is called ```backup_images.sh``` and is triggered by CRON.
 
 In this case CRON calls the script every 5 Minutes, checks for Delta, and copies the new Images
@@ -251,10 +264,8 @@ START/END datetime and the Files being copied.
 ### Check 
 You can ```tail -f logfile.log``` to see whether CRON calls the script.
 
-# MISC
 
 ## EXTERNAL Status LEDs and PWR-Down button
-
 I am using an external Button so safely shutdown RPI.
 Also using external LED for both 
 1. RPI Power-on (ON when RPI is on)
@@ -276,11 +287,12 @@ dtparam=pwr_led_gpio=17
 # Enables ACT-LED. Normally OFF when not active.
 dtparam=act_led_gpio=27,act_led_trigger=mmc0,act_led_activelow=off
 ```
-# **RUN THE PHOTOBOOTH**
+## **RUN THE PHOTOBOOTH**
 
-## Init and Pre-glight
+### Init and Pre-flight check
 Run the ```preflight-check.sh``` script from within ./photobooth directory.
-It will do some sanity checks like verify if various Paths exist. It also offers to creates the 'pictures' directory if not existing.
+It will do some sanity checks like verify if various Paths exist. It also offers to create the 'pictures' directory if not existing.  
+**You only really need this after a fresh install.**
 
 ```sh
 ~/photobooth $ 
@@ -297,4 +309,16 @@ It will do some sanity checks like verify if various Paths exist. It also offers
 └── showinfo.sh
 ├── pictures
 │   ├── 
+```
+
+### Run the Software
+on the RPI itself start
+```sh
+cd ~/
+./photobooth.sh
+```
+If you run this from a remote console (eg SSH):
+```sh
+cd ~/
+DISPLAY=:0 ./photobooth.sh &
 ```
