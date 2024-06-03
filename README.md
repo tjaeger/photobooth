@@ -17,10 +17,10 @@ Photobooth is a simple script collection designed to build a DSLR-based photoboo
 - [Options](#options)
   - [Backup - add external Drive](#backup---add-external-usb-drive)
   - [Backup - setup automatic backup](#backup---automatic-backup-of-images)
-  - [Run the Photobooth](#run-the-photobooth)
-    - [RUN - init and Preflight check](#init-and-pre-flight-check)
-    - [RUN - Photobooth](#run-the-software)
-  
+- [Run the Photobooth](#run-the-photobooth)
+  - [RUN - init and Preflight check](#init-and-pre-flight-check)
+  - [RUN - Photobooth](#run-the-software)
+  - [Files/Scripts and their role](#scripts---and-what-they-do)
 
 ## Introduction
 Photobooth is aimed at hobbyists who want to create a DIY photobooth using their DSLR camera and a Raspberry Pi. The scripts provided in this collection will help you capture, display, and manage photos effortlessly.
@@ -322,3 +322,33 @@ If you run this from a remote console (eg SSH):
 cd ~/
 DISPLAY=:0 ./photobooth.sh &
 ```
+### Scripts - and what they do
+
+
+`config.sh`  
+Contains some central variables, used across scripts. 
+
+`photobooth.sh`  
+The Main Script. Basically calls gphoto2 in tethered-shooting mode.
+
+`hookscript.sh`  
+Is called by gphoto2 (which is called by photobooth.sh).
+Init, Download and Post-Action can be defined which can call more action (scripts)
+Mainly using  (download) section - which calls `postprocessing.sh` which than:
+
+`postprocessing.sh`  
+Displays an Image (name passed as Argument by gphoto2/hookscript) temporary.
+This could call another script that randomly displays a Slideshow of taken Images.
+
+`backup_images.sh`  
+**Optional:** Run by CRON and crating regular backup of Images.
+It must contain absolut paths (i am using relative path/variables whenever possible) as its called by CRON which doesnt assume to run from /photobooth
+
+`preflight-check.sh`  
+**Optional:** to use after fresh install. It performs some sanity checks and creates needed Directories on request.
+
+`init-camera.sh`  
+**Optional:** to set parameters in the Camera (eg Aperture/Speed). This could be called manually or from within hookscript.sh in the (init) or (start) section.
+
+`showinfo.sh`  
+**Optional:** Displays a static Image (eg 'look into camera and press buzzer'). This could be called from within `hookscript.sh' in the (init) section
