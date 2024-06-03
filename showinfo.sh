@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source the configuration file
-source config.sh
+source ./config.sh
 
 killall feh # close all 'feh' processes (the running screenshow)
 

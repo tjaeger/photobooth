@@ -1,4 +1,3 @@
-
 # Photobooth
 
 Photobooth is a simple script collection designed to build a DSLR-based photobooth running on a Raspberry Pi (RPI). This project allows you to set up a fully functional photobooth with your DSLR camera, capturing high-quality images and displaying them directly on the RPI using `feh`.
@@ -131,8 +130,29 @@ cd photobooth
 use https://github.com/tjaeger/photobooth.git if you havent setup git using sshkey
 
 
+
+## 5. **Install ImageMagick for Image Manipulation/handling**
+(Once optional, it's mandatory now as its needed for Image Transformation/Handling/Manipulation - eg for creating Thumbnails)
+
+Get the Source
 ```sh
-```
+cd ~/
+git clone https://github.com/ImageMagick/ImageMagick.git
+cd ImageMagick
+git tag --sort=-v:refname ## Lets find the latest TAG - 7.1.1-33 in our case - INFORMATIVE step
+git describe --tags ## Lets see whats the current tag we checked out - INFORMATIVE step
+````
+
+```sh
+cd ~/ImageMagick
+./configure
+make
+sudo make install
+sudo ldconfig /usr/local/lib
+````
+
+Check if it got installed ```magick -version```
+
 
 # Troubleshooting
 
@@ -158,7 +178,7 @@ sudo chmod 0000 /usr/lib/systemd/user/gvfs* # this prevent GVFS from starting
 
 # Options
 
-## Add another USB Drive and create a mount point
+## **BACKUP - Add an external USB Drive for Backup and create a mount point**
 
 **This assumes you have an attached USB(SSD) Drive attached and formatted EXT4 !!**
 
@@ -199,6 +219,22 @@ sudo mount
 ```
 or check the mount point - ```/home/user/ssdusb```
 
+
+## **BACKUP - Automatic Backup of Images**
+
+In this setup the RPI runs off a SDCARD. To prevent loss in case of SDCARD Damage there is a helper script
+to create a local Backup to an external Drive - a USB-SSD Drive in my case.
+The script is called ```backup_images.sh``` and is triggered by CRON.
+
+In this case CRON calls the script every 5 Minutes, checks for Delta, and copies the new Images
+Use crontab to edit the CRONJOB File and add the below line ```*/5 * * * * /home/user/photobooth/backup_images.sh```
+
+```sh
+crontab -e
+*/5 * * * * /home/user/photobooth/backup_images.sh
+```
+Note: On each script execution logfile.log is being created/extended with the
+START/END datetime and the Files being copied.
 
 # MISC
 

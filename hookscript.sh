@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Source the configuration file
-source config.sh
+source ./config.sh
 
 self=`basename $0`
 
