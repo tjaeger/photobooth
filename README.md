@@ -30,9 +30,11 @@ To get started with Photobooth, you'll need the following hardware and Software
 - Optional external USB SSD Drive for Image Storage
 
 - Tested Setup
--- NIKON D90, D7000
--- RF603II yongnuo (Radio remote control - built into Buzzer)
--- 2x YN560 external Flash
+  - NIKON D90, D7000
+  - RF603II yongnuo (Radio remote control - built into Buzzer)
+  - 2x YN560 external Flash
+
+Optional HW: External LED, Button for headless RPI management.
 
 
 ## Software Setup
@@ -129,8 +131,6 @@ cd photobooth
 ```
 use https://github.com/tjaeger/photobooth.git if you havent setup git using sshkey
 
-
-
 ## 5. **Install ImageMagick for Image Manipulation/handling**
 (Once optional, it's mandatory now as its needed for Image Transformation/Handling/Manipulation - eg for creating Thumbnails)
 
@@ -175,6 +175,18 @@ sudo chmod 0000 /usr/lib/systemd/user/gvfs* # this prevent GVFS from starting
 
 ```sudo reboot``` and try again
 
+## 6. **Post-Installation CLEANUP**
+
+Once all the above packages are compiled and installed successfully, the Build Directorties can be deleted.
+
+```sh
+cd ~/
+rm libgphoto2-2.5.31.tar.bz2
+sudo rm -r libgphoto2-2.5.31
+sudo rm -r gphoto2
+sudo rm -r feh
+sudo rm -r ImageMagick
+```
 
 # Options
 
@@ -236,6 +248,9 @@ crontab -e
 Note: On each script execution logfile.log is being created/extended with the
 START/END datetime and the Files being copied.
 
+### Check 
+You can ```tail -f logfile.log``` to see whether CRON calls the script.
+
 # MISC
 
 ## EXTERNAL Status LEDs and PWR-Down button
@@ -260,4 +275,26 @@ dtparam=pwr_led_gpio=17
 
 # Enables ACT-LED. Normally OFF when not active.
 dtparam=act_led_gpio=27,act_led_trigger=mmc0,act_led_activelow=off
+```
+# **RUN THE PHOTOBOOTH**
+
+## Init and Pre-glight
+Run the ```preflight-check.sh``` script from within ./photobooth directory.
+It will do some sanity checks like verify if various Paths exist. It also offers to creates the 'pictures' directory if not existing.
+
+```sh
+~/photobooth $ 
+.
+├── backup_images.sh
+├── config.sh
+├── hookscript.sh
+├── init-camera.sh
+├── logfile.log
+├── photobooth.sh
+├── postprocessing.sh
+├── preflight-check.sh
+├── README.md
+└── showinfo.sh
+├── pictures
+│   ├── 
 ```
