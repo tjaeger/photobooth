@@ -1,0 +1,9 @@
+
+
+
+identify -format "Pixel Size: %w x %h\n" ./pictures/PB_20240601_183409046.JPG
+
+DISPLAY=:0 feh ./pictures/thumbnail_PB_20240601_183409046.JPG --geometry 1072x712+800+0 --zoom=50
+
+
+
