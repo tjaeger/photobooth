@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source the configuration file
-source ./config.sh
+source /home/user/photobooth/config.sh
 
 killall feh # close all 'feh' processes (the running screenshow)
 
@@ -9,7 +9,8 @@ killall feh # close all 'feh' processes (the running screenshow)
 # That process is being killed when postprocessing.sh gets called
 
 feh --zoom 80 \
-    --fullscreen \
     --hide-pointer \
     --quiet \
-    "info_DE.JPG" &
+    --geometry 800x480+0+0 \
+    "./photobooth_assets/info_DE.JPG"
+
