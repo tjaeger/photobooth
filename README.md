@@ -1,6 +1,10 @@
 # Photobooth
 
 Photobooth is a simple script collection designed to build a DSLR-based photobooth running on a Raspberry Pi (RPI), capturing high-quality images and displaying them directly on the RPI using `feh`.
+The idea is to leave 'camera stuff' to 'camera stuff' (eg Flash, Flash trigger/control, remote control) to leverage the wide options in the Camera Tools Market.
+The Raspberry only reads any taken Picture (tethered shooting) and handles all the Display, storage, Backup, Slideshow, Monitors.
+Used Software is all widely available, with good community support and Open Source.
+
 
 ## Table of Contents
 
@@ -44,6 +48,11 @@ To get started with Photobooth, you'll need the following hardware and Software
 - HDMI Monitor for the RPI, or DSI Display (i use a 7" original RPI Display)
 - Keyboard and mouse for initial setup
 - Optional external USB SSD Drive for Image Storage
+- Big Button/Hand remote for triggering Shutter using a re-purposed RF-603-II PCB
+  - This part requires de-composing a RF603 PCB from its case and resolder Wires.
+  Optionally a RF603 can be used 'as it is' as a remote control - or any other remote control that 
+  triggers the Camera. 
+
 
 - Tested Setup
   - NIKON D90, D7000
